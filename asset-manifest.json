@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/betflix/static/css/main.ebfa80db.css",
-    "main.js": "/betflix/static/js/main.742662e9.js",
+    "main.css": "/betflix/static/css/main.b3132878.css",
+    "main.js": "/betflix/static/js/main.ef86404c.js",
     "index.html": "/betflix/index.html",
-    "main.ebfa80db.css.map": "/betflix/static/css/main.ebfa80db.css.map",
-    "main.742662e9.js.map": "/betflix/static/js/main.742662e9.js.map"
+    "main.b3132878.css.map": "/betflix/static/css/main.b3132878.css.map",
+    "main.ef86404c.js.map": "/betflix/static/js/main.ef86404c.js.map"
   },
   "entrypoints": [
-    "static/css/main.ebfa80db.css",
-    "static/js/main.742662e9.js"
+    "static/css/main.b3132878.css",
+    "static/js/main.ef86404c.js"
   ]
 }
