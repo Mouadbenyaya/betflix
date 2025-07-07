@@ -1,4 +1,4 @@
-/* MovieDetails.css */
+/* src/styles/MovieDetails.css */
 
 /* Overall Page Container */
 .movie-details-container {
@@ -7,6 +7,7 @@
   color: #e5e5e5; /* Default text color */
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Consistent font */
   padding-bottom: 50px; /* Add some space at the bottom */
+  overflow-x: hidden; /* Prevent body scroll if something overflows horizontally */
 }
 
 /* Loading Message (reused from other components) */
@@ -21,6 +22,7 @@
   justify-content: center;
   align-items: center;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  animation: fadeIn 1s ease-in forwards; /* Assuming fadeIn keyframes exist or are added */
 }
 
 /* Backdrop Image Wrapper with Overlay */
@@ -56,8 +58,8 @@
   padding: 30px 40px !important; /* Larger padding, overriding p-4 */
   margin-top: -10vh; /* Pull content up over the bottom of the backdrop */
   position: relative;
-  z-index: 10;
-  background: transparent !important;
+  z-index: 10; /* Ensure content is above backdrop and overlays */
+  background: transparent !important; /* Ensure no background interferes with backdrop overlap */
 }
 
 /* Main Title */
@@ -87,67 +89,117 @@
   margin-bottom: 20px !important; /* Space below casting title */
 }
 
+/* --- Styles for Cast List Navigation --- */
+.cast-list-nav-container {
+  position: relative; /* Allows absolute positioning of arrows */
+  display: flex; /* Aligns arrows and cast list horizontally */
+  align-items: center; /* Vertically centers arrows with the list */
+  margin-bottom: 30px; /* Space below the cast section */
+}
+
+/* Styling for the horizontal scroll arrows */
+.scroll-arrow {
+  background-color: transparent; /* No background color by default */
+  color: white; /* White arrow icon */
+  border: none;
+  border-radius: 8px; /* Square with slight rounding for the button shape */
+  width: 50px; /* Size of the button */
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20; /* Ensure arrows are above cast members */
+  transition: background-color 0.3s ease, opacity 0.3s ease, transform 0.3s ease; 
+  flex-shrink: 0; /* Prevents button from shrinking in flex container */
+  position: absolute; /* Absolute position within .cast-list-nav-container */
+  top: 50%; /* Vertically center */
+  transform: translateY(-50%); /* Adjust for perfect vertical centering */
+  opacity: 0.7; /* Slightly transparent by default for just the icon */
+}
+
+.scroll-arrow:hover {
+  background-color: rgba(255, 255, 255, 0.08); /* Very subtle light background on hover */
+  opacity: 1; /* Fully opaque icon on hover */
+  transform: translateY(-50%) scale(1.1); /* Slightly enlarge on hover */
+}
+
+.scroll-arrow.left-arrow {
+  left: -20px; /* Position outside the visible area, adjust as needed */
+}
+
+.scroll-arrow.right-arrow {
+  right: -20px; /* Position outside the visible area, adjust as needed */
+}
+
 /* Casting List (Horizontal Scroll) */
 .flex.overflow-x-auto.gap-2.movie-cast-list {
   display: flex !important;
-  overflow-x: auto !important;
-  gap: 15px !important;
-  padding-bottom: 15px; /* Space for scrollbar */
-  scrollbar-width: thin;
-  scrollbar-color: #555 #222;
+  overflow-x: auto !important; /* Enable horizontal scrolling */
+  gap: 15px !important; /* Space between cast cards */
+  padding-bottom: 15px; /* Space for scrollbar and to prevent content from being cut */
+  padding-left: 20px; /* Padding to prevent first card being hidden by left arrow */
+  padding-right: 20px; /* Padding to prevent last card being hidden by right arrow */
+  /* Hide default scrollbar for a cleaner look (but keep functionality) */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
-/* Custom Scrollbar for Cast List (Webkit) */
+/* Custom Scrollbar for Cast List (Webkit browsers like Chrome, Safari) */
 .flex.overflow-x-auto.gap-2.movie-cast-list::-webkit-scrollbar {
-  height: 8px;
+  height: 8px; /* Height of the scrollbar */
 }
 
 .flex.overflow-x-auto.gap-2.movie-cast-list::-webkit-scrollbar-track {
-  background: #222;
-  border-radius: 10px;
+  background: #222; /* Background of the scrollbar track */
+  border-radius: 10px; /* Rounded corners for the track */
 }
 
 .flex.overflow-x-auto.gap-2.movie-cast-list::-webkit-scrollbar-thumb {
-  background-color: #555;
-  border-radius: 10px;
-  border: 2px solid #222;
+  background-color: #555; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 2px solid #222; /* Border around the thumb to match track background */
 }
 
 .flex.overflow-x-auto.gap-2.movie-cast-list::-webkit-scrollbar-thumb:hover {
-  background-color: #777;
+  background-color: #777; /* Darker color on hover for the thumb */
 }
 
 /* Individual Actor Card */
 .w-24.text-center.movie-actor-card {
-  width: 120px !important; /* Largeur fixe */
-  flex-shrink: 0;
-  text-align: center !important;
+  width: 120px !important; /* Fixed width for each actor card */
+  flex-shrink: 0; /* Prevents cards from shrinking when space is limited */
+  text-align: center !important; /* Centers text within the card */
   cursor: pointer;
-  margin: 10px 0;
-  transition: none; /* plus d’animation au hover */
+  transition: transform 0.2s ease; /* Animation de hover */
 }
 
 .w-24.text-center.movie-actor-card:hover {
-  transform: none;
-  box-shadow: none;
+  transform: translateY(-5px); /* Lift card slightly on hover */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Add shadow on hover */
 }
 
-/* Actor Image simple et carré, coins arrondis légers */
+/* Actor Image: Now perfectly SQUARE */
 .rounded.movie-actor-img {
-  width: 100% !important;
-  height: 180px !important; /* Hauteur fixe */
-  object-fit: cover !important;
-  border-radius: 8px !important; /* coins légèrement arrondis, pas rond */
-  border: 1px solid #444;
-  box-shadow: none;
-  transition: none;
+  width: 100% !important; /* Full width of its parent card (120px) */
+  height: 120px !important; /* FIXED: Height matches width for a perfect square */
+  object-fit: cover !important; /* Ensures the image covers the area without distortion */
+  border-radius: 8px !important; /* Slightly rounded corners */
+  border: 1px solid #444; /* Subtle border */
+  box-shadow: none; /* Remove default box-shadow if any */
+  transition: none; /* No transition for the image itself on hover */
 }
-
 
 /* Actor Name */
 .text-xs.movie-actor-name {
-  font-size: 0.9em !important;
-  color: #e5e5e5 !important;
-  margin-top: 8px !important;
-  word-wrap: break-word;
+  font-size: 0.9em !important; /* Smaller font size for name */
+  color: #e5e5e5 !important; /* Light text color */
+  margin-top: 8px !important; /* Space above the name */
+  word-wrap: break-word; /* Allows long names to wrap to the next line */
+}
+
+/* Keyframes (re-defined here for completeness if not global) */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

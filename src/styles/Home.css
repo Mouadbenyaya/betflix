@@ -1,92 +1,124 @@
-/* Container global */
+/* src/styles/Home.css */
+
+/* Container global for the home page */
 .home-page-container {
-  background-color: #0e0e0e;
-  min-height: 100vh;
-  color: #e5e5e5;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #0e0e0e; /* Dark background for the entire home page */
+  min-height: 100vh; /* Ensures it takes at least the full viewport height */
+  color: #e5e5e5; /* Light text color for general content */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Modern sans-serif font stack */
+  overflow-x: hidden; /* Prevents horizontal scrollbars that might appear from subtle element movements */
 }
 
-/* Hero banner */
+/* Hero banner section styles */
 .hero-banner {
-  position: relative;
-  width: 100%;
-  height: 75vh;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  padding-left: 60px;
-  transition: background-image 1s ease-in-out;
-  overflow: hidden;
+  position: relative; /* Needed for absolute positioning of pseudo-elements (overlays) */
+  width: 100%; /* Full width of its parent */
+  height: 75vh; /* 75% of the viewport height for a prominent hero section */
+  background-position: center; /* Centers the background image within the element */
+  background-size: cover; /* Ensures the background image covers the entire area, cropping if necessary */
+  background-repeat: no-repeat; /* Prevents the background image from tiling */
+  display: flex; /* Uses flexbox to align content within the banner */
+  align-items: center; /* Vertically centers the content within the flex container */
+  padding-left: 60px; /* Left padding for the text content */
+  /* Smooth transition for the background image change (e.g., when cycling movies) */
+  transition: background-image 1s ease-in-out; 
+  overflow: hidden; /* Ensures any content or gradients extending beyond the banner are clipped */
 }
 
-/* Overlay noir transparent pour améliorer la lisibilité */
+/* Pseudo-element for a transparent black overlay (top to bottom gradient)
+   This enhances text readability over complex background images. */
 .hero-banner::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+  content: ""; /* Required for pseudo-elements */
+  position: absolute; /* Positions relative to the .hero-banner */
+  inset: 0; /* Shorthand for top:0; right:0; bottom:0; left:0;, making it cover the whole banner */
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.9) 0%,
-    rgba(0, 0, 0, 0.421) 30%,
-    rgba(14, 14, 14, 0) 60%
+    rgba(0, 0, 0, 0.9) 0%, /* Starts very dark (almost opaque black) at the bottom */
+    rgba(0, 0, 0, 0.421) 30%, /* Becomes less opaque around 30% from the bottom */
+    rgba(14, 14, 14, 0) 60% /* Becomes fully transparent higher up (at 60% from bottom) */
   );
-  z-index: 1;
+  z-index: 1; /* Places this overlay above the background image */
 }
 
-/* Dégradé en bas pour estomper la limite de l’image */
+/* Pseudo-element for a subtle fade-out gradient at the bottom of the banner.
+   This helps to blend the hero image smoothly into the next section below it. */
 .hero-banner::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
+  content: ""; /* Required for pseudo-elements */
+  position: absolute; /* Positions relative to the .hero-banner */
+  bottom: 0; /* Aligns to the bottom of the banner */
   left: 0;
-  width: 100%;
-  height: 120px;
+  width: 100%; /* Full width */
+  height: 120px; /* The height over which the fade effect occurs */
   background: linear-gradient(
     to bottom,
-    rgba(14, 14, 14, 0) 0%,
-    rgba(14, 14, 14, 1) 100%
+    rgba(14, 14, 14, 0) 0%, /* Starts fully transparent at the top of this layer */
+    rgba(14, 14, 14, 1) 100% /* Fades to a solid background color (matching .home-page-container) at the bottom */
   );
-  z-index: 2;
+  z-index: 2; /* Ensures this gradient is above the image and the first overlay */
 }
 
-/* Contenu du hero (texte) */
+/* --- NEW ANIMATION KEYFRAMES for content (text) --- */
+/* Defines an animation named 'fadeInSlideUp'.
+   This animation makes elements fade in while subtly sliding upwards. */
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0; /* Starting state: completely transparent */
+    transform: translateY(20px); /* Starting state: shifted 20 pixels down from its final position */
+  }
+  to {
+    opacity: 1; /* Ending state: fully opaque */
+    transform: translateY(0); /* Ending state: at its original vertical position */
+  }
+}
+
+/* Styles for the content block (title and description) within the hero banner */
 .hero-banner-content {
-  position: relative;
-  z-index: 10;
-  max-width: 600px;
-  color: #fff;
+  position: relative; /* Allows z-index and transformation relative to its normal document flow */
+  z-index: 10; /* Ensures the content is above all gradients and overlays */
+  max-width: 600px; /* Limits the maximum width of the text block for better readability */
+  color: #fff; /* White text color */
+  /* Apply the animation here: */
+  opacity: 0; /* Start invisible so the animation can properly reveal it */
+  animation: fadeInSlideUp 0.8s ease-out forwards; /* Apply 'fadeInSlideUp' for 0.8 seconds, with an ease-out timing function, and keep the final state */
+  animation-delay: 0.3s; /* Delay the start of the animation by 0.3 seconds, allowing the background image to begin its transition first */
 }
 
-/* Titre du film */
+/* Styling for the movie title (h1) in the hero banner */
 .hero-banner-content h1 {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+  font-size: 3.5rem; /* Large font size for prominent display */
+  font-weight: 700; /* Bold font weight */
+  margin-bottom: 20px; /* Space below the title */
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7); /* Adds a subtle text shadow for better readability against varied backgrounds */
 }
 
-/* Description */
+/* Styling for the movie description (p) in the hero banner */
 .hero-banner-content p {
-  font-size: 1.2rem;
-  line-height: 1.5;
-  max-height: 7.5em; /* environ 5 lignes */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+  font-size: 1.2rem; /* Comfortable reading font size */
+  line-height: 1.5; /* Good line spacing for readability */
+  max-height: 7.5em; /* Limits the description to approximately 5 lines (1.5em * 5 lines) */
+  overflow: hidden; /* Hides any text that exceeds the max-height */
+  text-overflow: ellipsis; /* Adds "..." at the end if the text is truncated */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6); /* Subtle text shadow */
 }
 
-/* Style message chargement */
+/* Style for a loading message (displayed while movie data is being fetched) */
 .loading-message {
-  color: #e5e5e5;
-  font-size: 1.5em;
-  text-align: center;
-  padding: 50px;
-  background-color: #141414;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #e5e5e5; /* Light text color */
+  font-size: 1.5em; /* Larger font size */
+  text-align: center; /* Centers the text horizontally */
+  padding: 50px; /* Padding around the message */
+  background-color: #141414; /* Dark background color for the loading state */
+  min-height: 100vh; /* Ensures it covers the full viewport height */
+  display: flex; /* Uses flexbox for centering content */
+  justify-content: center; /* Centers horizontally within the flex container */
+  align-items: center; /* Centers vertically within the flex container */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Consistent font */
+  /* Optional: Basic fade-in animation for the loading message */
+  animation: fadeIn 1s ease-in forwards; 
+}
+
+/* Keyframes for a simple fade-in animation (used for .loading-message) */
+@keyframes fadeIn {
+  from { opacity: 0; } /* Starts fully transparent */
+  to { opacity: 1; } /* Ends fully opaque */
 }

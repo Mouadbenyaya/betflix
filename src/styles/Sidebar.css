@@ -1,0 +1,186 @@
+/* src/styles/Sidebar.css */
+
+/* --- CSS Variables for Easy Customization and Theming --- */
+/* These variables define the look and feel, making global changes simple. */
+:root {
+  --sidebar-width: 220px; /* Defines the width of the sidebar when open */
+  
+  /* Sidebar Background: Dark grey with 85% opacity, allowing content behind to show */
+  --sidebar-bg: rgba(26, 26, 26, 0.85); 
+  
+  --text-color-light: #e0e0e0; /* Light text color for general content */
+  --text-color-dark: #b0b0b0; /* Slightly darker text for less prominent items */
+
+  /* ACCENT COLOR (Purple tones for the button and active links) */
+  --accent-color: #8a2be2; /* Base purple color (BlueViolet) */
+  --accent-color-hover: #6a0dad; /* A darker shade of purple for hover states */
+
+  /* Active Link Background: Transparent purple, matching the accent color */
+  --active-link-bg: rgba(138, 43, 226, 0.15); 
+
+  --border-radius-sm: 4px; /* Small border radius for elements (used for square button) */
+  --spacing-unit: 1rem; /* Base unit for consistent padding and margins */
+  --transition-speed: 0.3s; /* Standard duration for all CSS transitions */
+
+  /* Toggle Button Sizing and Positioning Variables */
+  --toggle-button-size: 2.2rem; /* The width and height of the square toggle button */
+  --button-spacing-top: 1rem; /* Distance from the top edge of the viewport for the button */
+  --button-spacing-left-closed: 1rem; /* Horizontal distance from the left when the sidebar is closed */
+  --button-spacing-left-open: calc(var(--sidebar-width) + 1rem); /* Horizontal distance when sidebar is open */
+
+  /* Calculated height for the internal sidebar spacer. 
+     This ensures navigation content starts below the fixed toggle button. */
+  --sidebar-spacer-height: calc(var(--toggle-button-size) + var(--button-spacing-top) + var(--spacing-unit) * 0.5);
+}
+
+/* --- Main Sidebar Container Styling --- */
+.sidebar {
+  position: fixed; /* Positions the sidebar relative to the viewport (stays put on scroll) */
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width); /* Applies the defined sidebar width */
+  height: 100vh; /* Takes up the full height of the viewport */
+  background-color: var(--sidebar-bg); /* Applies the transparent background color */
+  color: var(--text-color-light); /* Sets the default text color for the sidebar */
+  padding: var(--spacing-unit); /* Applies padding around the sidebar's content */
+  box-sizing: border-box; /* Ensures padding and border are included in the element's total width/height */
+  overflow-y: auto; /* Adds a scrollbar if content overflows vertically */
+  z-index: 1000; /* Ensures the sidebar is above most other page content */
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow for visual depth */
+
+  /* Initial state: The sidebar is moved completely off-screen to the left */
+  transform: translateX(-100%);
+  /* Applies a smooth transition for the 'transform' property when the state changes */
+  transition: transform var(--transition-speed) ease-in-out;
+}
+
+/* --- Sidebar 'Open' State --- */
+/* When the '.open' class is applied (by React), the sidebar slides into view */
+.sidebar.open {
+  transform: translateX(0); /* Moves the sidebar fully into the viewport */
+}
+
+/* --- Sidebar 'Closed' State (Explicitly defined for clarity) --- */
+/* This rule ensures the sidebar is pushed off-screen when 'closed' class is active */
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+/* --- Spacer Element Inside Sidebar --- */
+/* This div takes up calculated space to push the navigation links down, 
+   preventing them from being hidden by the fixed toggle button. */
+.sidebar-header-spacer {
+  height: var(--sidebar-spacer-height); 
+}
+
+/* --- Navigation List Styling (<ul>) --- */
+.sidebar ul {
+  list-style: none; /* Removes default bullet points from list items */
+  padding: 0; /* Removes default padding */
+  margin: 0; /* Removes default margin */
+}
+
+/* --- Individual Navigation List Item Styling (<li>) --- */
+.sidebar li {
+  margin-bottom: calc(var(--spacing-unit) * 0.8); /* Adds vertical spacing between list items */
+}
+
+/* --- Navigation Link Styling (<a> or NavLink) --- */
+.sidebar a {
+  display: flex; /* Uses flexbox for horizontal alignment of icon and text */
+  align-items: center; /* Vertically centers icon and text */
+  gap: 0.75rem; /* Adds space between the icon and the text */
+
+  color: var(--text-color-dark); /* Default text color for links */
+  text-decoration: none; /* Removes the default underline from links */
+  font-weight: 500; /* Sets a medium font weight */
+  padding: 0.6rem 0.8rem; /* Internal padding within each link item */
+  border-radius: var(--border-radius-sm); /* Applies slight rounding to corners */
+  /* Smooth transitions for color and background changes on hover/focus */
+  transition: color var(--transition-speed) ease,
+              background-color var(--transition-speed) ease;
+}
+
+/* --- Navigation Link Hover and Focus States --- */
+.sidebar a:hover,
+.sidebar a:focus {
+  color: var(--text-color-light); /* Changes text color to a lighter shade on hover/focus */
+  background-color: rgba(255, 255, 255, 0.08); /* Adds a subtle, semi-transparent background */
+  outline: none; /* Removes the default browser focus outline (ensure accessibility via other means) */
+}
+
+/* --- Active Navigation Link Styling (applied by NavLink's activeClassName or className prop) --- */
+.sidebar a.active-link {
+  color: var(--accent-color); /* Sets the text color to the accent color */
+  font-weight: 700; /* Makes the text bold */
+  background-color: var(--active-link-bg); /* Transparent accent background */
+  box-shadow: inset 3px 0 0 var(--accent-color); /* Subtle colored line on the left */
+}
+
+/* --- Toggle Button Styling --- */
+.sidebar-toggle-btn {
+  position: fixed; /* Stays fixed relative to the viewport */
+  top: var(--button-spacing-top); /* Positions from the top */
+  left: var(--button-spacing-left-closed); /* Initial position from the left (when sidebar is closed) */
+  
+  /* Button Background: Purple with 40% opacity (rgba values explicitly set) */
+  background-color: rgba(138, 43, 226, 0.4); 
+  
+  border: none; /* Removes default button border */
+  color: white; /* Color of the icon (arrow) within the button */
+  width: var(--toggle-button-size); /* Sets width to make it a square */
+  height: var(--toggle-button-size); /* Sets height to make it a square */
+  
+  /* --- Make the button SQUARE (with slight rounding) --- */
+  border-radius: var(--border-radius-sm); /* Using predefined small border radius */
+  /* For a perfectly sharp square, use: border-radius: 0; */
+  
+  display: flex; /* Uses Flexbox to easily center the icon */
+  align-items: center; /* Centers items vertically */
+  justify-content: center; /* Centers items horizontally */
+  /* font-size influences the icon if not set by size prop in Lucide, but not for scaling */
+  cursor: pointer; /* Changes cursor to a pointer on hover */
+  z-index: 1100; /* Ensures the button is above both the sidebar and main content */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Adds a subtle shadow */
+  
+  /* Smooth transitions ONLY for background-color and left position.
+     'transform' is intentionally excluded here to prevent scaling. */
+  transition: background-color var(--transition-speed) ease,
+              left var(--transition-speed) ease-in-out;
+}
+
+/* --- Toggle Button Position when Sidebar is Open --- */
+/* This rule moves the button to the right of the sidebar when the sidebar is open. */
+.sidebar.open + .sidebar-toggle-btn {
+  left: var(--button-spacing-left-open); /* New left position when sidebar is open */
+}
+
+/* --- Toggle Button Hover Effects (NO SCALING) --- */
+.sidebar-toggle-btn:hover {
+  background-color: rgba(138, 43, 226, 0.6); /* Becomes slightly more opaque on hover */
+  /* IMPORTANT: 'transform: scale()' is DELIBERATELY ABSENT here to prevent sizing changes */
+}
+
+/* --- Toggle Button Active (Click) Effects (NO SCALING) --- */
+.sidebar-toggle-btn:active {
+  background-color: rgba(138, 43, 226, 0.8); /* Becomes even more opaque on click */
+  /* IMPORTANT: 'transform: scale()' is DELIBERATELY ABSENT here to prevent sizing changes */
+}
+
+/* --- IMPORTANT: Main Content Area Styling --- */
+/* This section is CRUCIAL for managing the layout interaction.
+   Your main application content (e.g., your routes) should be wrapped in an element with this class. */
+.main-content {
+  margin-left: 0; /* Default: no left margin when the sidebar is closed */
+  padding: 1rem; /* General padding for the main content area */
+  /* Smooth transition for the left margin, matching the sidebar's animation */
+  transition: margin-left var(--transition-speed) ease-in-out;
+}
+
+/* --- Main Content Adjustment when Sidebar is Open --- */
+/* When the sidebar has the 'open' class, this rule applies a left margin to the main content. */
+/* The `~` (general sibling combinator) targets any `.main-content` element that is a sibling
+   of `.sidebar.open` (regardless of elements in between them). */
+.sidebar.open ~ .main-content {
+  margin-left: var(--sidebar-width); /* Pushes the main content by the width of the sidebar */
+}

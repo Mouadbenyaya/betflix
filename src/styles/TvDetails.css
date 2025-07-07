@@ -7,6 +7,7 @@
   color: #e5e5e5; /* Default text color */
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Consistent font */
   padding-bottom: 50px; /* Add some space at the bottom */
+  overflow-x: hidden; /* Added: Prevent body scroll if something overflows horizontally, matching MovieDetails */
 }
 
 /* Loading Message */
@@ -21,6 +22,7 @@
   justify-content: center;
   align-items: center;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  animation: fadeIn 1s ease-in forwards; /* Added: Ensure fade-in animation for loading */
 }
 
 /* Backdrop Image Wrapper with Overlay */
@@ -52,7 +54,6 @@
   /* Dark gradient at the bottom fading up */
 }
 
-
 /* Main Details Content Section */
 .p-4.tv-details-content {
   padding: 30px 40px !important; /* Larger padding, overriding p-4 */
@@ -61,7 +62,6 @@
   z-index: 10;
   background: transparent !important; /* Ensure no background from p-4 */
 }
-
 
 /* Main Title */
 .text-3xl.font-bold {
@@ -90,14 +90,62 @@
   margin-bottom: 20px !important; /* Space below casting title */
 }
 
+/* --- Added: Styles for Cast List Navigation (copied from MovieDetails) --- */
+.cast-list-nav-container {
+  position: relative; /* Allows absolute positioning of arrows */
+  display: flex; /* Aligns arrows and cast list horizontally */
+  align-items: center; /* Vertically centers arrows with the list */
+  margin-bottom: 30px; /* Space below the cast section */
+}
+
+/* Styling for the horizontal scroll arrows (copied from MovieDetails) */
+.scroll-arrow {
+  background-color: transparent; /* No background color by default */
+  color: white; /* White arrow icon */
+  border: none;
+  border-radius: 8px; /* Square with slight rounding for the button shape */
+  width: 50px; /* Size of the button */
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20; /* Ensure arrows are above cast members */
+  transition: background-color 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+  flex-shrink: 0; /* Prevents button from shrinking in flex container */
+  position: absolute; /* Absolute position within .cast-list-nav-container */
+  top: 50%; /* Vertically center */
+  transform: translateY(-50%); /* Adjust for perfect vertical centering */
+  opacity: 0.7; /* Slightly transparent by default for just the icon */
+}
+
+.scroll-arrow:hover {
+  background-color: rgba(255, 255, 255, 0.08); /* Very subtle light background on hover */
+  opacity: 1; /* Fully opaque icon on hover */
+  transform: translateY(-50%) scale(1.1); /* Slightly enlarge on hover */
+}
+
+.scroll-arrow.left-arrow {
+  left: -20px; /* Position outside the visible area, adjust as needed */
+}
+
+.scroll-arrow.right-arrow {
+  right: -20px; /* Position outside the visible area, adjust as needed */
+}
+
 /* Casting List (Horizontal Scroll) */
 .flex.overflow-x-auto.gap-2.tv-cast-list {
   display: flex !important; /* Override flex */
   overflow-x: auto !important; /* Enable horizontal scrolling */
   gap: 15px !important; /* Consistent gap between actor cards */
   padding-bottom: 15px; /* Space for scrollbar */
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: #555 #222; /* Firefox */
+  /* Added: Padding for arrows */
+  padding-left: 20px; /* Space to prevent first card being hidden by left arrow */
+  padding-right: 20px; /* Space to prevent last card being hidden by right arrow */
+  
+  /* Hide default scrollbar for a cleaner look (but keep functionality) */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 /* Custom Scrollbar for Cast List (Webkit) */
@@ -120,13 +168,12 @@
   background-color: #777; /* Thumb color on hover */
 }
 
-
 /* Individual Actor Card */
 .w-24.text-center.tv-actor-card {
-  width: 120px !important; /* Wider actor cards for better look */
+  width: 120px !important; /* Fixed width for each actor card, consistent with MovieDetails */
   flex-shrink: 0; /* Prevent cards from shrinking */
   text-align: center !important; /* Center content */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Adjusted transition speed */
   cursor: pointer;
 }
 
@@ -135,14 +182,14 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Subtle shadow on hover */
 }
 
-/* Actor Image */
+/* Actor Image: Now perfectly SQUARE, matching MovieDetails */
 .rounded.tv-actor-img {
-  width: 100% !important;
-  height: auto !important;
-  border-radius: 50% !important; /* Make images circular */
-  object-fit: cover !important;
-  border: 2px solid #333; /* Subtle border */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  width: 100% !important; /* Full width of its parent card (120px) */
+  height: 120px !important; /* CHANGED: Fixed height for a perfect square */
+  border-radius: 8px !important; /* CHANGED: Square with slight rounding */
+  object-fit: cover !important; /* Ensures image covers the area */
+  border: 1px solid #444; /* CHANGED: Subtle border consistent with MovieDetails */
+  box-shadow: none; /* CHANGED: No box-shadow, consistent with MovieDetails */
 }
 
 /* Actor Name */
@@ -151,4 +198,10 @@
   color: #e5e5e5 !important;
   margin-top: 8px !important; /* Space above name */
   word-wrap: break-word; /* Allow long names to wrap */
+}
+
+/* Keyframes for fade-in (if not defined globally in index.css or App.css) */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

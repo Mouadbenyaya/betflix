@@ -1,10 +1,17 @@
+// src/components/MovieList.js
+
 import { useEffect, useState, useRef } from "react";
 import {
+  fetchTrendingMovies,
+  fetchUpcomingMovies,
   fetchPopularMovies,
+  fetchTopRatedMovies, // Re-adding for a new list
   fetchMoviesByGenre,
   fetchPopularTvShows,
+  fetchTopRatedTvShows, // Re-adding for a new list
+  fetchTvShowsAiringToday, // Re-adding for a new list
   fetchTvShowsByGenre,
-} from "../api/tmdb";
+} from "../api/tmdb"; // Ensure all necessary fetch functions are imported
 import MovieCard from "./MovieCard";
 import "../styles/MovieList.css";
 
@@ -20,43 +27,50 @@ export default function MovieList() {
       setError(null);
       try {
         const [
-          popMovies,
-          actMovies,
-          sciMovies,
-          animMovies,
-          horMovies,
-          comMovies,
-          popTv,
-          actTv,
-          animTv,
-          docuTv,
+          trendingMovies,
+          upcomingMovies,
+          popularMovies,
+          topRatedMovies, // New data variable
+          actionMovies,
+          sciFiMovies,
+          animationMovies,
+          popularTvShows,
+          topRatedTvShows, // New data variable
+          airingTodayTvShows, // New data variable
+          animationTvShows,
+          documentaryTvShows,
         ] = await Promise.all([
+          fetchTrendingMovies(),
+          fetchUpcomingMovies(),
           fetchPopularMovies(),
-          fetchMoviesByGenre(28),
-          fetchMoviesByGenre(878),
-          fetchMoviesByGenre(16),
-          fetchMoviesByGenre(27),
-          fetchMoviesByGenre(35),
+          fetchTopRatedMovies(), // Fetch Top Rated Movies
+          fetchMoviesByGenre(28), // Action Movies
+          fetchMoviesByGenre(878), // Science Fiction Movies
+          fetchMoviesByGenre(16), // Animation Movies (Movies)
           fetchPopularTvShows(),
-          fetchTvShowsByGenre(10759),
-          fetchTvShowsByGenre(16),
-          fetchTvShowsByGenre(99),
+          fetchTopRatedTvShows(), // Fetch Top Rated TV Shows
+          fetchTvShowsAiringToday(), // Fetch TV Shows Airing Today
+          fetchTvShowsByGenre(16), // Animation TV Shows
+          fetchTvShowsByGenre(99), // Documentary TV Shows
         ]);
 
         setData({
-          popMovies,
-          actMovies,
-          sciMovies,
-          animMovies,
-          horMovies,
-          comMovies,
-          popTv,
-          actTv,
-          animTv,
-          docuTv,
+          trendingMovies,
+          upcomingMovies,
+          popularMovies,
+          topRatedMovies,
+          actionMovies,
+          sciFiMovies,
+          animationMovies,
+          popularTvShows,
+          topRatedTvShows,
+          airingTodayTvShows,
+          animationTvShows,
+          documentaryTvShows,
         });
       } catch (err) {
-        setError("Impossible de charger les films et séries. Veuillez réessayer.");
+        setError("Impossible de charger les données. Veuillez réessayer.");
+        console.error("Error loading data:", err);
       } finally {
         setLoading(false);
       }
@@ -88,16 +102,19 @@ export default function MovieList() {
   }
 
   const sections = [
-    { title: "Films Populaires", data: data.popMovies, type: "movie" },
-    { title: "Films d'Action", data: data.actMovies, type: "movie" },
-    { title: "Science-Fiction", data: data.sciMovies, type: "movie" },
-    { title: "Films d'Animation", data: data.animMovies, type: "movie" },
-    { title: "Films d'Horreur", data: data.horMovies, type: "movie" },
-    { title: "Films de Comédie", data: data.comMovies, type: "movie" },
-    { title: "Séries Populaires", data: data.popTv, type: "tv" },
-    { title: "Séries d'Action", data: data.actTv, type: "tv" },
-    { title: "Séries d'Animation", data: data.animTv, type: "tv" },
-    { title: "Documentaires", data: data.docuTv, type: "tv" },
+    { title: "Films Tendances", data: data.trendingMovies, type: "movie" },
+    { title: "Films Populaires", data: data.popularMovies, type: "movie" },
+    { title: "Films à Venir", data: data.upcomingMovies, type: "movie" },
+    { title: "Films les Mieux Notés", data: data.topRatedMovies, type: "movie" }, // New Section
+    { title: "Films d'Action", data: data.actionMovies, type: "movie" },
+    { title: "Films de Science-Fiction", data: data.sciFiMovies, type: "movie" },
+    { title: "Films d'Animation", data: data.animationMovies, type: "movie" },
+
+    { title: "Séries Populaires", data: data.popularTvShows, type: "tv" },
+    { title: "Séries les Mieux Notées", data: data.topRatedTvShows, type: "tv" }, // New Section
+    { title: "Séries en diffusion aujourd'hui", data: data.airingTodayTvShows, type: "tv" }, // New Section
+    { title: "Séries d'Animation", data: data.animationTvShows, type: "tv" },
+    { title: "Séries Documentaires", data: data.documentaryTvShows, type: "tv" },
   ];
 
   return (
@@ -134,8 +151,8 @@ function MovieRow({ title, data, type }) {
         <button className="row-arrow left-arrow" onClick={() => scroll("left")} aria-label="Défiler à gauche">&#10094;</button>
 
         <div className="row-posters" ref={scrollRef}>
-          {data.slice(0, 20).map((movie) => (
-            <MovieCard key={movie.id} movie={movie} type={type} />
+          {data.slice(0, 20).map((item) => (
+            <MovieCard key={item.id} movie={item} type={type} />
           ))}
         </div>
 

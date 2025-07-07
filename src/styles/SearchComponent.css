@@ -1,0 +1,109 @@
+/* Conteneur global */
+.search-container {
+  background-color: #141414; /* noir Netflix */
+  color: #fff;
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Champ de recherche centré et espacé */
+.search-input {
+  width: 60%;
+  max-width: 500px;
+  padding: 0.75rem 1rem;
+  margin-top: 10vh; /* éloigne du haut */
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+/* Messages de feedback */
+.search-feedback {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.search-error {
+  color: #e50914;
+  font-weight: bold;
+}
+
+.search-noresults {
+  color: #999;
+  font-style: italic;
+}
+
+.search-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.loader {
+  width: 1rem;
+  height: 1rem;
+  border: 3px solid #999;
+  border-top-color: #e50914;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Grille des résultats façon Netflix */
+.search-results-grid {
+  margin-top: 2rem;
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  padding-bottom: 2rem;
+}
+
+/* Cartes de films/séries */
+.search-results-grid .movie-card {
+  background-color: #222;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.search-results-grid .movie-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(229, 9, 20, 0.7);
+}
+
+.movie-card img {
+  width: 100%;
+  display: block;
+}
+
+.movie-card .movie-title {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+  color: #fff;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .search-input {
+    width: 90%;
+    margin-top: 5vh;
+  }
+}
