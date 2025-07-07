@@ -1,0 +1,70 @@
+/* Container & global */
+.movie-list-container {
+  background-color: rgba(20, 20, 20, 0);
+  padding: 20px 30px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #fff;
+  user-select: none;
+}
+
+/* Section */
+.movie-row {
+  margin-bottom: 32px;
+}
+
+.row-title {
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+  padding-left: 8px;
+  letter-spacing: 0.02em;
+}
+
+/* Row container and scroll */
+.row-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.row-posters {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 8px;
+  padding-bottom: 10px;
+  scrollbar-width: none;
+}
+
+.row-posters::-webkit-scrollbar {
+  display: none;
+}
+
+/* Scroll arrows */
+.row-arrow {
+  background-color: rgba(20, 20, 20, 0.7);
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  width: 40px;
+  height: 80px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  z-index: 10;
+}
+
+.row-arrow:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.left-arrow {
+  margin-right: 8px;
+}
+
+.right-arrow {
+  margin-left: 8px;
+}

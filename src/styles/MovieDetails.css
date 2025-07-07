@@ -1,0 +1,153 @@
+/* MovieDetails.css */
+
+/* Overall Page Container */
+.movie-details-container {
+  background-color: #0e0e0e; /* Very dark background for the page */
+  min-height: 100vh; /* Ensure it covers full viewport height */
+  color: #e5e5e5; /* Default text color */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Consistent font */
+  padding-bottom: 50px; /* Add some space at the bottom */
+}
+
+/* Loading Message (reused from other components) */
+.loading-message {
+  color: #e5e5e5;
+  font-size: 1.5em;
+  text-align: center;
+  padding: 50px;
+  background-color: #141414;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* Backdrop Image Wrapper with Overlay */
+.backdrop-wrapper {
+  position: relative;
+  width: 100%;
+  height: 60vh; /* Adjust height as needed, e.g., 60% of viewport height */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.w-full.movie-backdrop-img {
+  width: 100% !important; /* Override w-full */
+  height: 100% !important;
+  object-fit: cover !important; /* Ensures image covers the area */
+  filter: brightness(70%); /* Slightly dim the image to make text pop */
+  transition: filter 0.3s ease;
+}
+
+/* Gradient Overlay */
+.backdrop-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, #0e0e0e 0%, rgba(14, 14, 14, 0.7) 30%, rgba(14, 14, 14, 0) 100%);
+}
+
+/* Main Details Content Section */
+.p-4.movie-details-content {
+  padding: 30px 40px !important; /* Larger padding, overriding p-4 */
+  margin-top: -10vh; /* Pull content up over the bottom of the backdrop */
+  position: relative;
+  z-index: 10;
+  background: transparent !important;
+}
+
+/* Main Title */
+.text-3xl.font-bold {
+  font-size: 3.5em !important; /* Larger, impactful title */
+  font-weight: 700 !important; /* Bold */
+  color: #fff !important; /* Pure white */
+  margin-bottom: 20px !important; /* Space below title */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+}
+
+/* Overview Paragraph */
+.movie-overview {
+  font-size: 1.1em !important;
+  line-height: 1.6 !important;
+  color: #e5e5e5 !important;
+  margin-bottom: 30px !important;
+  max-width: 800px; /* Limit width for readability */
+}
+
+/* Casting Title */
+.text-xl.mt-4.mb-2.movie-casting-title {
+  font-size: 1.8em !important; /* Consistent with section titles */
+  font-weight: 700 !important;
+  color: #fff !important;
+  margin-top: 40px !important; /* More space above casting */
+  margin-bottom: 20px !important; /* Space below casting title */
+}
+
+/* Casting List (Horizontal Scroll) */
+.flex.overflow-x-auto.gap-2.movie-cast-list {
+  display: flex !important;
+  overflow-x: auto !important;
+  gap: 15px !important;
+  padding-bottom: 15px; /* Space for scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: #555 #222;
+}
+
+/* Custom Scrollbar for Cast List (Webkit) */
+.flex.overflow-x-auto.gap-2.movie-cast-list::-webkit-scrollbar {
+  height: 8px;
+}
+
+.flex.overflow-x-auto.gap-2.movie-cast-list::-webkit-scrollbar-track {
+  background: #222;
+  border-radius: 10px;
+}
+
+.flex.overflow-x-auto.gap-2.movie-cast-list::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 10px;
+  border: 2px solid #222;
+}
+
+.flex.overflow-x-auto.gap-2.movie-cast-list::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
+}
+
+/* Individual Actor Card */
+.w-24.text-center.movie-actor-card {
+  width: 120px !important; /* Largeur fixe */
+  flex-shrink: 0;
+  text-align: center !important;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: none; /* plus d’animation au hover */
+}
+
+.w-24.text-center.movie-actor-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Actor Image simple et carré, coins arrondis légers */
+.rounded.movie-actor-img {
+  width: 100% !important;
+  height: 180px !important; /* Hauteur fixe */
+  object-fit: cover !important;
+  border-radius: 8px !important; /* coins légèrement arrondis, pas rond */
+  border: 1px solid #444;
+  box-shadow: none;
+  transition: none;
+}
+
+
+/* Actor Name */
+.text-xs.movie-actor-name {
+  font-size: 0.9em !important;
+  color: #e5e5e5 !important;
+  margin-top: 8px !important;
+  word-wrap: break-word;
+}

@@ -1,0 +1,154 @@
+/* TvDetails.css */
+
+/* Overall Page Container */
+.tv-details-container {
+  background-color: #0e0e0e; /* Very dark background for the page */
+  min-height: 100vh; /* Ensure it covers full viewport height */
+  color: #e5e5e5; /* Default text color */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Consistent font */
+  padding-bottom: 50px; /* Add some space at the bottom */
+}
+
+/* Loading Message */
+.loading-message {
+  color: #e5e5e5;
+  font-size: 1.5em;
+  text-align: center;
+  padding: 50px;
+  background-color: #141414;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* Backdrop Image Wrapper with Overlay */
+.backdrop-wrapper {
+  position: relative;
+  width: 100%;
+  height: 60vh; /* Adjust height as needed, e.g., 60% of viewport height */
+  overflow: hidden;
+  display: flex; /* Helps vertically center the image if needed */
+  align-items: center; /* Vertically center the image */
+}
+
+.w-full.tv-backdrop-img {
+  width: 100% !important; /* Override w-full */
+  height: 100% !important;
+  object-fit: cover !important; /* Ensures image covers the area */
+  filter: brightness(70%); /* Slightly dim the image to make text pop */
+  transition: filter 0.3s ease;
+}
+
+/* Gradient Overlay */
+.backdrop-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, #0e0e0e 0%, rgba(14, 14, 14, 0.7) 30%, rgba(14, 14, 14, 0) 100%);
+  /* Dark gradient at the bottom fading up */
+}
+
+
+/* Main Details Content Section */
+.p-4.tv-details-content {
+  padding: 30px 40px !important; /* Larger padding, overriding p-4 */
+  margin-top: -10vh; /* Pull content up over the bottom of the backdrop */
+  position: relative; /* For z-index if elements overlap */
+  z-index: 10;
+  background: transparent !important; /* Ensure no background from p-4 */
+}
+
+
+/* Main Title */
+.text-3xl.font-bold {
+  font-size: 3.5em !important; /* Larger, impactful title */
+  font-weight: 700 !important; /* Bold */
+  color: #fff !important; /* Pure white */
+  margin-bottom: 20px !important; /* Space below title */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+}
+
+/* Overview Paragraph */
+.tv-overview {
+  font-size: 1.1em !important;
+  line-height: 1.6 !important;
+  color: #e5e5e5 !important;
+  margin-bottom: 30px !important;
+  max-width: 800px; /* Limit width for readability */
+}
+
+/* Casting Title */
+.text-xl.mt-4.mb-2.tv-casting-title {
+  font-size: 1.8em !important; /* Consistent with section titles */
+  font-weight: 700 !important;
+  color: #fff !important;
+  margin-top: 40px !important; /* More space above casting */
+  margin-bottom: 20px !important; /* Space below casting title */
+}
+
+/* Casting List (Horizontal Scroll) */
+.flex.overflow-x-auto.gap-2.tv-cast-list {
+  display: flex !important; /* Override flex */
+  overflow-x: auto !important; /* Enable horizontal scrolling */
+  gap: 15px !important; /* Consistent gap between actor cards */
+  padding-bottom: 15px; /* Space for scrollbar */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #555 #222; /* Firefox */
+}
+
+/* Custom Scrollbar for Cast List (Webkit) */
+.flex.overflow-x-auto.gap-2.tv-cast-list::-webkit-scrollbar {
+  height: 8px; /* Height of horizontal scrollbar */
+}
+
+.flex.overflow-x-auto.gap-2.tv-cast-list::-webkit-scrollbar-track {
+  background: #222; /* Track color */
+  border-radius: 10px;
+}
+
+.flex.overflow-x-auto.gap-2.tv-cast-list::-webkit-scrollbar-thumb {
+  background-color: #555; /* Thumb color */
+  border-radius: 10px;
+  border: 2px solid #222; /* Border around thumb */
+}
+
+.flex.overflow-x-auto.gap-2.tv-cast-list::-webkit-scrollbar-thumb:hover {
+  background-color: #777; /* Thumb color on hover */
+}
+
+
+/* Individual Actor Card */
+.w-24.text-center.tv-actor-card {
+  width: 120px !important; /* Wider actor cards for better look */
+  flex-shrink: 0; /* Prevent cards from shrinking */
+  text-align: center !important; /* Center content */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.w-24.text-center.tv-actor-card:hover {
+  transform: translateY(-5px); /* Lift slightly on hover */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Subtle shadow on hover */
+}
+
+/* Actor Image */
+.rounded.tv-actor-img {
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 50% !important; /* Make images circular */
+  object-fit: cover !important;
+  border: 2px solid #333; /* Subtle border */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Actor Name */
+.text-xs.tv-actor-name {
+  font-size: 0.9em !important; /* Slightly larger text */
+  color: #e5e5e5 !important;
+  margin-top: 8px !important; /* Space above name */
+  word-wrap: break-word; /* Allow long names to wrap */
+}
