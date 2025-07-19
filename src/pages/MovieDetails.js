@@ -1,38 +1,35 @@
-// src/pages/MovieDetails.jsx
 import { useParams } from "react-router-dom";
-import { useEffect, useState, useRef } from "react"; // Import useRef
+import { useEffect, useState, useRef } from "react"; 
 import { fetchMovieDetails, getBackdropUrl, getImageUrl } from "../api/tmdb";
-import "../styles/MovieDetails.css"; // Import your custom CSS file
-import { ChevronLeft, ChevronRight } from 'lucide-react'; // Import Lucide icons for arrows
+import "../styles/MovieDetails.css"; 
+import { ChevronLeft, ChevronRight } from 'lucide-react'; 
 
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
-  const castListRef = useRef(null); // Create a ref for the cast list container
+  const castListRef = useRef(null); 
 
   useEffect(() => {
-    // Note: ensure your fetchMovieDetails function also fetches 'credits' (casting)
     fetchMovieDetails(id)
       .then(setMovie)
       .catch(console.error);
   }, [id]);
 
-  // Function to scroll the cast list left
+ 
   const scrollLeft = () => {
     if (castListRef.current) {
       castListRef.current.scrollBy({
-        left: -200, // Scroll left by 200px (adjust as needed)
-        behavior: 'smooth' // Smooth scrolling animation
+        left: -200, 
+        behavior: 'smooth' 
       });
     }
   };
 
-  // Function to scroll the cast list right
   const scrollRight = () => {
     if (castListRef.current) {
       castListRef.current.scrollBy({
         left: 200, // Scroll right by 200px (adjust as needed)
-        behavior: 'smooth' // Smooth scrolling animation
+        behavior: 'smooth' 
       });
     }
   };

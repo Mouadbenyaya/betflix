@@ -201,7 +201,6 @@ export const formatRating = (rating) => {
   return `${Math.round(rating * 10)}%`;
 };
 
-// Obtenir le nom du genre par ID
 export const getGenreById = (genreId, genres) => {
   const genre = genres.find(g => g.id === genreId);
   return genre ? genre.name : 'Genre inconnu';

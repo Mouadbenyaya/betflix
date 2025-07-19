@@ -1,0 +1,207 @@
+/* --- Add/Adjust these global styles at the very top of your Sections.css file --- */
+html, body, #root { /* Target html, body, AND the root div */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%; /* Use min-height to ensure it covers the viewport even with sparse content */
+    background-color: #141414; /* Your desired deep dark background */
+    overflow-x: hidden; /* Prevent horizontal scrollbar */
+    color: #e5e5e5; /* Default text color for consistency */
+}
+
+/* --- Rest of your Sections.css content follows below --- */
+
+/* General body styling (can be slightly redundant if html, body, #root handles it) */
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /* background-color: #141414; <-- This can be removed from here if defined above for html, body, #root */
+    /* color: #e5e5e5; <-- This can be removed from here if defined above for html, body, #root */
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Container for main content */
+.sections-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* Header/Hero Section Styling */
+.main-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 80px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+    color: #fff;
+    /* background-image, background-size, background-position are set via inline style in JSX */
+}
+
+.main-header .container {
+    max-width: 900px;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.main-title {
+    font-size: 4.5em;
+    color: #fff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+    margin-bottom: 15px;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+
+.main-subtitle {
+    font-size: 1.5em;
+    color: #f0f0f0;
+    max-width: 800px;
+    margin: 0 auto;
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+/* Main Series Section (for the single horizontal row) */
+.main-series-section {
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+.section-title {
+    font-size: 1.8em;
+    color: #e5e5e5;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+/* Key Netflix-style: Horizontal scrolling for movie cards */
+.series-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 15px;
+    gap: 10px;
+}
+
+/* Custom Scrollbar Styling (for a cleaner look, like Netflix) */
+.series-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.series-grid::-webkit-scrollbar-track {
+    background: #282828;
+    border-radius: 10px;
+}
+
+.series-grid::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.series-grid::-webkit-scrollbar-thumb:hover {
+    background: #e50914;
+}
+
+/* MovieCard styling - crucial for consistent look and hover effects */
+.movie-card {
+    flex: 0 0 auto;
+    width: 220px;
+    background-color: #222;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.movie-card:hover {
+    transform: scale(1.08);
+    z-index: 10;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+    background-color: #333;
+}
+
+.movie-card img {
+    width: 100%;
+    height: 330px;
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid #333;
+}
+
+.movie-card h3 {
+    font-size: 1.1em;
+    color: #e5e5e5;
+    padding: 10px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+/* Skeleton loader styling */
+.series-card-skeleton {
+    flex: 0 0 auto;
+    width: 220px;
+    height: 330px;
+    background-color: #333;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.5em;
+    }
+
+    .main-subtitle {
+        font-size: 1em;
+    }
+
+    .section-title {
+        font-size: 1.5em;
+    }
+
+    .movie-card {
+        width: 150px;
+        height: auto;
+    }
+
+    .movie-card img {
+        height: 225px;
+    }
+
+    .series-card-skeleton {
+        width: 150px;
+        height: 225px;
+    }
+
+    .main-header {
+        min-height: 350px;
+        padding: 40px 20px;
+    }
+
+    .main-header .container {
+        padding: 15px 20px;
+    }
+}

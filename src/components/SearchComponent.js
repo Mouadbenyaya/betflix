@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { searchMulti, fetchTopRatedMovies } from '../api/tmdb';
+import { searchMulti, fetchTopRatedMovies, fetchPopularTvShows } from '../api/tmdb';
 import MovieCard from './MovieCard';
 import '../styles/SearchComponent.css';
 
@@ -11,30 +11,40 @@ export default function SearchComponent() {
   const searchTimeoutRef = useRef(null);
 
   useEffect(() => {
-    const loadTopRated = async () => {
+    const loadDefaultContent = async () => {
       setLoading(true);
+      setError(null);
       try {
-        const data = await fetchTopRatedMovies();
-        setResults(data);
+        const movies = await fetchTopRatedMovies();
+        const tvShows = await fetchPopularTvShows();
+
+        // Ajouter manuellement media_type à chaque item
+        const moviesWithType = movies.map(movie => ({ ...movie, media_type: 'movie' }));
+        const tvWithType = tvShows.map(tv => ({ ...tv, media_type: 'tv' }));
+
+        const combined = [...moviesWithType, ...tvWithType];
+
+        // Optionnel : trier par popularité décroissante
+        combined.sort((a, b) => b.popularity - a.popularity);
+
+        setResults(combined);
       } catch (err) {
-        console.error("Erreur top-rated:", err);
-        setError("Impossible de charger les films populaires.");
+        console.error("Erreur chargement contenu par défaut:", err);
+        setError("Impossible de charger les films et séries populaires.");
       } finally {
         setLoading(false);
       }
     };
-    loadTopRated();
-  }, []);
 
-  // Gestion recherche
-  useEffect(() => {
     if (query.trim() === '') {
-      return; // on garde les top-rated
+      loadDefaultContent();
     }
+  }, [query]);
 
-    if (searchTimeoutRef.current) {
-      clearTimeout(searchTimeoutRef.current);
-    }
+  useEffect(() => {
+    if (query.trim() === '') return;
+
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
 
     searchTimeoutRef.current = setTimeout(async () => {
       setLoading(true);
@@ -43,7 +53,7 @@ export default function SearchComponent() {
         const data = await searchMulti(query);
         setResults(data);
       } catch (err) {
-        console.error("Erreur recherche :", err);
+        console.error("Erreur recherche:", err);
         setError("Impossible de charger les résultats. Réessayez.");
       } finally {
         setLoading(false);

@@ -4,6 +4,8 @@ import MovieDetails from "./pages/MovieDetails";
 import TvDetails from "./pages/TvDetails";
 import Sidebar from "./components/Sidebar"; // <-- Import Sidebar
 import SearchComponent from "./components/SearchComponent"; 
+import Settingss from "./pages/Settings";
+import Sections from "./pages/Sections"
 import "./App.css";
 
 export default function App() {
@@ -22,7 +24,9 @@ export default function App() {
                 <Route path="/betflix" element={<Home />} />
                 <Route path="/movie/:id" element={<MovieDetails />} />
                 <Route path="/tv/:id" element={<TvDetails />} />
-                <Route path="/search" element={<SearchComponent />} /> {/* <-- NEW: Route for SearchComponent */}
+                <Route path="/search" element={<SearchComponent />} /> 
+                <Route path ="/settings" element ={<Settingss/>}/>
+                <Route path ="/sections" element ={<Sections/>}/>
                 <Route
                   path="*"
                   element={

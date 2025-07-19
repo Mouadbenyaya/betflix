@@ -57,22 +57,7 @@ export default function Sidebar() {
               </NavLink>
             </li>
             <li>
-              <NavLink 
-                to="/settings"
-                className={({ isActive }) => isActive ? "active-link" : undefined}
-              >
-                <Settings size={18} />
-                <span>Settings</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink 
-                to="/profile"
-                className={({ isActive }) => isActive ? "active-link" : undefined}
-              >
-                <User size={18} />
-                <span>Profile</span>
-              </NavLink>
+             
             </li>
             <li>
               <NavLink 
@@ -85,11 +70,11 @@ export default function Sidebar() {
             </li>
             <li>
               <NavLink 
-                to="/reports"
+                to="/settings"
                 className={({ isActive }) => isActive ? "active-link" : undefined}
               >
-                <FileText size={18} />
-                <span>Reports</span>
+                <Settings size={18} />
+                <span>Settings</span>
               </NavLink>
             </li>
           </ul>
